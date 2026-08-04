@@ -3,7 +3,7 @@ name: NodeJS CI/CD
 on:
   push:
     branches:
-      - main
+      - staging
 
 jobs:
 
