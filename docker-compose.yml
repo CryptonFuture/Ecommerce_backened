@@ -22,8 +22,11 @@ services:
       - 8000:8000
     environment:
       APP_NAME: Ecommerce
+      GRPC_PORT: 50051
       PORT: 8000
       MONGO_URL: mongodb+srv://cryptonfuturemedia1989_db_user:gPtmqIFk8JB2SVeI@cluster0.ejp9pmh.mongodb.net/
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     depends_on:
       - mongo_db
 
