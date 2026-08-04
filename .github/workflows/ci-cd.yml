@@ -1,4 +1,4 @@
-name: NodeJS CI/CD
+name: Node CI/CD Local
 
 on:
   push:
@@ -6,52 +6,29 @@ on:
       - staging
 
 jobs:
-
-  test:
-
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: self-hosted
 
     steps:
-
-      - name: Checkout
-
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Node
-
+      - name: Setup Node.js
         uses: actions/setup-node@v4
-
         with:
           node-version: 22
 
-      - name: Install Packages
-
+      - name: Install Dependencies
         run: npm install
 
-      - name: Run Linter
-
-        run: npm run lint
-
       - name: Run Tests
-
         run: npm test
 
-  deploy:
+      - name: Stop Containers
+        run: docker compose down
 
-    needs: test
+      - name: Build & Start Containers
+        run: docker compose up -d --build
 
-    runs-on: ubuntu-latest
-
-    steps:
-
-        with:
-      
-          script: |
-
-            cd /var/www/express-app
-
-            git pull origin staging
-
-            docker compose down
-
-            docker compose up -d --build
+      - name: Remove Unused Images
+        run: docker image prune -f

@@ -1,19 +1,13 @@
 FROM node:22-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY ./package.json ./
-
-COPY ./package-lock.json ./
+COPY package*.json ./
 
 RUN npm install
 
-COPY ./src ./src
-
-COPY ./.env ./
-
-COPY ./index.js ./
+COPY . .
 
 EXPOSE 8000
 
-CMD ["npm", "start"]
+CMD ["npm","start"]
