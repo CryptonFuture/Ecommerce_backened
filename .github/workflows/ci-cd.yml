@@ -18,8 +18,8 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install Dependencies
-        shell: bash
+      - name: Install Packages
+        shell: cmd
         run: npm install
 
       - name: Run Tests
