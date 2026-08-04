@@ -1,0 +1,11 @@
+﻿{
+  "agentId": 4,
+  "agentName": "TEST",
+  "poolId": 1,
+  "poolName": "Default",
+  "serverUrl": "https://pipelinesghubeus7.actions.githubusercontent.com/ztMjL2zLeApI83S06VKPI3awLebW6ZlTrMGD6fRRrWDwGL4jkD/",
+  "gitHubUrl": "https://github.com/CryptonFuture/Ecommerce_backened",
+  "workFolder": "_work",
+  "useV2Flow": true,
+  "serverUrlV2": "https://broker.actions.githubusercontent.com/"
+}
