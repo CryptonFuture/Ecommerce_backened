@@ -2,6 +2,7 @@ const User = require('../models/Auth')
 const validator = require('validator')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
+const { redisClient } = require("../config/redis");
 
 const Register = async (req, res) => {
 
@@ -158,7 +159,36 @@ const Login = async (req, res) => {
             }
             await users.save()
 
-            res.json({
+            await redisClient.set(
+                `refreshToken:${user._id}`,
+                refreshToken,
+                {
+                    EX: 60 * 60 * 24 * 7
+                }
+            );
+
+            await redisClient.set(
+                `accessToken:${user._id}`,
+                accessToken,
+                JSON.stringify({
+                    id: user._id,
+                    email: user.email,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    tokenType: 'Bearer',
+                    active: user.active,
+                    role: user.role,
+                    is_admin: user.is_admin,
+                    image: user.image,
+                    is_login: user.is_login,
+                    expiryAt: user.expiryAt,
+                }),
+                {
+                    EX: 60 * 60
+                }
+            );
+
+           return res.json({
                 success: true,
                 accessToken,
                 refreshToken,
