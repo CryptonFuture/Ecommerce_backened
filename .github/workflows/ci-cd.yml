@@ -26,6 +26,17 @@ jobs:
       #   shell: cmd
       #   run: npm test
 
+      - name: Create .env
+        shell: cmd
+        run: |
+          echo PORT=${{ secrets.PORT }}>>.env
+          echo GRPC_PORT=${{ secrets.GRPC_PORT }}>>.env
+          echo MONGO_URI=${{ secrets.MONGO_URI }}>>.env
+          echo ACCESS_TOKEN_SECRET_KEY=${{ secrets.ACCESS_TOKEN_SECRET_KEY }}>>.env
+          echo REFRESH_TOKEN_SECRET_KEY=${{ secrets.REFRESH_TOKEN_SECRET_KEY }}>>.env
+          echo REDIS_HOST=${{ secrets.REDIS_HOST }}>>.env
+          echo REDIS_PORT=${{ secrets.REDIS_PORT }}>>.env
+
       - name: Stop Containers
         shell: cmd
         run: docker compose down
