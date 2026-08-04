@@ -27,10 +27,13 @@ jobs:
       #   run: npm test
 
       - name: Stop Containers
+        shell: cmd
         run: docker compose down
 
       - name: Build & Start Containers
+        shell: cmd
         run: docker compose up -d --build
 
       - name: Remove Unused Images
+        shell: cmd
         run: docker image prune -f
