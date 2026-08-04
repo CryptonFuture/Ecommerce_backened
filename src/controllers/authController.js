@@ -3,7 +3,7 @@ const validator = require('validator')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
-const register = async (req, res) => {
+const Register = async (req, res) => {
 
     try {
          const { firstname, lastname, email, password, confirmPass, role } = req.body
@@ -84,7 +84,7 @@ const register = async (req, res) => {
 
 
 
-const login = async (req, res) => {
+const Login = async (req, res) => {
     const { email, password, role } = req.body;
 
     try {
@@ -185,4 +185,4 @@ const login = async (req, res) => {
     }
 }
 
-module.exports = { register, login }
+module.exports = { Register, Login }
