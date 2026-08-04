@@ -1,31 +1,48 @@
-version: "3"
-
 services:
-  #MongoDB
-  mongo_db:
-    container_name: database_container
-    image: mongo:latest
-    restart: always
+  app:
+    build: .
+    container_name: ecommerce-api
+
+    ports:
+      - "5000:5000"
+      - "50051:50051"
+
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      GRPC_PORT: 50051
+      MONGO_URI: mongodb+srv://cryptonfuturemedia1989_db_user:gPtmqIFk8JB2SVeI@cluster0.ejp9pmh.mongodb.net/
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+
+    depends_on:
+      mongodb:
+        condition: service_started
+      redis:
+        condition: service_started
+
+    restart: unless-stopped
+
+  mongodb:
     volumes:
-      - mongo_db:/data/db
+      - mongo-data:/data/db
+
+    restart: unless-stopped
 
   redis:
-    image: redis:7
-    container_name: ecommerce-redis
-    restart: unless-stopped
+    image: redis:7-alpine
+    container_name: redis
+
+    command: redis-server --appendonly yes
+
     ports:
       - "6379:6379"
 
-  app:
-    build: .
-    ports:
-      - 8000:8000
-    environment:
-      APP_NAME: Ecommerce
-      PORT: 8000
-      MONGO_URL: mongodb+srv://cryptonfuturemedia1989_db_user:gPtmqIFk8JB2SVeI@cluster0.ejp9pmh.mongodb.net/
-    depends_on:
-      - mongo_db
+    volumes:
+      - redis-data:/data
+
+    restart: unless-stopped
 
 volumes:
-  mongo_db: {}
+  mongo-data:
+  redis-data:
