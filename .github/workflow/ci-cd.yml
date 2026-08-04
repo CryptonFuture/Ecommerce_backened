@@ -1,0 +1,61 @@
+name: NodeJS CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+
+        uses: actions/setup-node@v4
+
+        with:
+          node-version: 22
+
+      - name: Install Packages
+
+        run: npm install
+
+      - name: Run Linter
+
+        run: npm run lint
+
+      - name: Run Tests
+
+        run: npm test
+
+  deploy:
+
+    needs: test
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Deploy using SSH
+
+        uses: appleboy/ssh-action@v1.2.0
+
+        with:
+      
+          script: |
+
+            cd /var/www/express-app
+
+            git pull origin main
+
+            docker compose down
+
+            docker compose up -d --build
