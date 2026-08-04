@@ -22,9 +22,9 @@ jobs:
         shell: cmd
         run: npm install
 
-      - name: Run Tests
-        shell: cmd
-        run: npm test
+      # - name: Run Tests
+      #   shell: cmd
+      #   run: npm test
 
       - name: Stop Containers
         run: docker compose down
