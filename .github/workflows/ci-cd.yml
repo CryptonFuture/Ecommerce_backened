@@ -19,6 +19,7 @@ jobs:
           node-version: 22
 
       - name: Install Dependencies
+        shell: bash
         run: npm install
 
       - name: Run Tests

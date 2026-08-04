@@ -1,0 +1,12 @@
+﻿{
+  "repositoryName": "CryptonFuture/Ecommerce_backened",
+  "pipelineDirectory": "Ecommerce_backened",
+  "workspaceDirectory": "Ecommerce_backened\\Ecommerce_backened",
+  "repositories": {
+    "CryptonFuture/Ecommerce_backened": {
+      "repositoryPath": "Ecommerce_backened\\Ecommerce_backened",
+      "lastRunOn": "08/04/2026 12:18:39 +05:00"
+    }
+  },
+  "lastRunOn": "08/04/2026 12:18:39 +05:00"
+}
