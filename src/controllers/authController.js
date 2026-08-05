@@ -159,32 +159,29 @@ const Login = async (req, res) => {
             }
             await users.save()
 
-            await redisClient.set(
-                `refreshToken:${user._id}`,
-                refreshToken,
-                {
-                    EX: 60 * 60 * 24 * 7
-                }
-            );
-
-            await redisClient.set(
-                `accessToken:${user._id}`,
+            const redisData = {
                 accessToken,
-                JSON.stringify({
+                refreshToken,
+                user: {
                     id: user._id,
                     email: user.email,
                     firstname: user.firstname,
                     lastname: user.lastname,
-                    tokenType: 'Bearer',
+                    tokenType: "Bearer",
                     active: user.active,
                     role: user.role,
                     is_admin: user.is_admin,
                     image: user.image,
-                    is_login: user.is_login,
+                    is_login: 1,
                     expiryAt: user.expiryAt,
-                }),
+                }
+            };
+
+            await redisClient.set(
+                `user:${user._id}`,
+                JSON.stringify(redisData),
                 {
-                    EX: 60 * 60
+                    EX: 60 * 60 * 24 * 7
                 }
             );
 
